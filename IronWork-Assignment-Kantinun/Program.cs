@@ -19,31 +19,45 @@ Dictionary<decimal, List<char>> phoneAlphabet = new()
     { 9, new List<char> { 'W', 'X', 'Y', 'Z' } }
 };
 
-//Method 
-string oldPhonePad(string? input)
+//Method Section
+//
+//Assignment Method
+//string? for implementing nullable varialbe
+string oldPhonePad(string? input) 
 {
-    StringBuilder monitor = new StringBuilder();
-    StringBuilder inputMonitor = new StringBuilder();
+    StringBuilder monitor = new StringBuilder(); //PhoneMonitor
+    StringBuilder inputMonitor = new StringBuilder(); //InputMonitor (Thing you type In)
 
     if (!String.IsNullOrWhiteSpace(input))
     {
         //you don't need to for each and print for each character but I'm simulating what you going to see when you typing
         //in OldPhone
 
-        string[] charracterList = input.Split(' ');
+        string[] charracterList = input.Split(' '); //split the space from each character
 
-        foreach(string character in charracterList) 
+        foreach(string character in charracterList) //Loop for each Character
         {
-            int i = 0;
-            int count = 0;
+            int i = 0; //for loop count
+            int count = 0; //for number duplication count
             foreach (char ch in character)
             {
                 if (ch.Equals('*') || ch.Equals('#') ||  decimal.TryParse(ch.ToString(), out decimal result))
                 {
-                    Console.WriteLine("Monitor Length: {0}", monitor.Length);
                     inputMonitor.Append(ch);
-                    if (ch.Equals('#')) return monitor.ToString(); //can be exploit
-                    else if (ch.Equals('*') && monitor.Length > 1) monitor.Remove(monitor.Length - 1, 1);
+                    if (ch.Equals('#')) //end typing
+                    {
+                        Console.WriteLine("typing: {0}", inputMonitor.ToString());
+                        Console.WriteLine("end Typing");
+                        return monitor.ToString(); //can be exploit
+                    }
+                    else if (ch.Equals('*') && monitor.Length > 1) //delete previous char
+                    {
+                        
+                        Console.WriteLine("typing: {0}", inputMonitor.ToString());
+                        Console.WriteLine("deleting previous char");
+                        monitor.Remove(monitor.Length - 1, 1);
+                        Console.WriteLine("Showing: {0}", monitor.ToString());
+                    }
                     //can use Mod(%) to simplifly but I want to demonstate the phone monitor
                     else if (i != 0 && ch.Equals(character[i - 1]))
                     {
@@ -84,27 +98,28 @@ string oldPhonePad(string? input)
     return monitor.ToString();
 }
 
+//Tweak Phone Pad Output
+//string? for implementing nullable varialbe
 string newPhonePad(string? input)
 {
-    StringBuilder monitor = new StringBuilder();
-    StringBuilder inputMonitor = new StringBuilder();
+    StringBuilder monitor = new StringBuilder(); //PhoneMonitor
+    StringBuilder inputMonitor = new StringBuilder(); //Input Monitor (Thing you type In)
 
     if (!String.IsNullOrWhiteSpace(input))
     {
-        //you don't need to for each and print for each character but I'm simulating what you going to see when you typing
+       //you don't need to for each and print for each character but I'm simulating what you going to see when you typing
         //in OldPhone
 
-        string[] charracterList = input.Split(' ');
+        string[] charracterList = input.Split(' '); //split the space from each character (Not nessacary much in newPhone)
 
-        foreach (string character in charracterList)
+        foreach (string character in charracterList) //Loop for each Character
         {
-            int i = 0;
-            int count = 0;
+            int i = 0; //for loop count
+            int count = 0; //for number duplication count
             foreach (char ch in character)
             {
                 if (ch.Equals('*') || ch.Equals('#') || decimal.TryParse(ch.ToString(), out decimal result))
                 {
-                    Console.WriteLine("Monitor Length: {0}", monitor.Length);
                     inputMonitor.Append(ch);
                     if (ch.Equals('#')) return monitor.ToString(); //can be exploit
                     else if (ch.Equals('*') && monitor.Length > 1) monitor.Remove(monitor.Length - 1, 1);
@@ -139,7 +154,6 @@ string newPhonePad(string? input)
                 else return "?????";
             }
         }
-        if (input.Trim().Equals("36776") || input.Equals("36667 7666")) Console.WriteLine("You Know What, I Don't know where I should go");
     }
 
     return monitor.ToString();
@@ -151,22 +165,25 @@ static void writeDotLine()
 }
 
 
+//Main Section
+
 Console.WriteLine("Hello, World! ,Hello Iron Work!, Hello my new Boss!");
 writeDotLine();
 writeDotLine();
-Console.Write("What's your name: ");
+Console.Write("What's your name: "); 
 string? name = Console.ReadLine();
-Console.WriteLine("Nice you pass : Mr. {0}", name);
+Console.WriteLine("Nice you pass : Mr. {0}", name); //LOL
 writeDotLine();
 Console.Write("JUst Kidding Pleaes write your input: ");
 string? input = Console.ReadLine();
 writeDotLine();
 writeDotLine();
 string oldOutput = oldPhonePad(input);
-Console.WriteLine("Nokia 1150 output: {0}", oldOutput);
+Console.WriteLine("Nokia 1150 output: {0}", oldOutput); //Assignment Output
 writeDotLine();
 string newOutput = newPhonePad(input);
-Console.WriteLine("Nokia 3310 output: {0}", newOutput);
+Console.WriteLine("Nokia 3310 output: {0}", newOutput); //Tweak Output
+if (!String.IsNullOrEmpty(input) && (input.Replace(" ", "").Replace("*", "").Replace("#", "").Trim().Equals("36776") || input.Equals("36667 7666"))) Console.WriteLine("You Know What, I Don't know where I should go");
 writeDotLine();
 writeDotLine();
 Console.WriteLine("End of program");
